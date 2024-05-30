@@ -1,16 +1,10 @@
-import { serve } from '@hono/node-server'
-import { Hono } from 'hono'
+import { ROUTES } from "./app/routes";
+import { initHono } from "./services/hono/hono";
 
-const app = new Hono()
-
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
+initHono({
+  routes: ROUTES
 })
-
-const port = 3000
-console.log(`Server is running on port ${port}`)
-
-serve({
-  fetch: app.fetch,
-  port
-})
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
