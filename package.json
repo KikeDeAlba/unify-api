@@ -1,20 +1,22 @@
 {
-  "scripts": {
-    "dev": "tsx watch src/index.ts"
-  },
-  "dependencies": {
-    "@hono/node-server": "^1.11.1",
-    "@hono/zod-validator": "0.2.1",
-    "@neondatabase/serverless": "^0.9.3",
-    "dotenv": "16.4.5",
-    "drizzle-orm": "^0.30.10",
-    "hono": "^4.4.0",
-    "tmi.js": "1.8.5",
-    "zod": "3.23.8"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.17",
-    "drizzle-kit": "^0.21.4",
-    "tsx": "^4.7.1"
-  }
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"test": "vitest"
+	},
+	"dependencies": {
+		"@hono/node-server": "^1.11.1",
+		"@hono/zod-validator": "0.2.1",
+		"dotenv": "16.4.5",
+		"drizzle-orm": "^0.30.10",
+		"hono": "^4.4.0",
+		"postgres": "3.4.4",
+		"tmi.js": "1.8.5",
+		"zod": "3.23.8"
+	},
+	"devDependencies": {
+		"@types/node": "^20.11.17",
+		"drizzle-kit": "^0.21.4",
+		"tsx": "^4.7.1",
+		"vitest": "^1.6.0"
+	}
 }
