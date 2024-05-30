@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION listen_channel(channel_name TEXT)
 $BODY$
 BEGIN
   INSERT INTO channels (username)
-  VALUES (channel_name)
+  VALUES (lower(channel_name))
   ON CONFLICT (username)
   DO UPDATE
   SET listening = TRUE;
