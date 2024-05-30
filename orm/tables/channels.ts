@@ -6,5 +6,6 @@ export const ChannelsTable = pgTable("channels", {
     username: text("username").notNull().unique(),
     listening: boolean("listening").notNull().default(true),
     createdAt: timestamp("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
-    updatedAt: timestamp("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`)
+    updatedAt: timestamp("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+    accessToken: text("access_token").notNull().unique(),
 })
