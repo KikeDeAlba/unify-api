@@ -1,0 +1,1 @@
+export const parseLocalUrl = (path: `/${string}`) => `http://localhost:3000${path}`
