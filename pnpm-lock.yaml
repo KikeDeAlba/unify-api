@@ -17,6 +17,9 @@ importers:
       '@types/bcrypt':
         specifier: 5.0.2
         version: 5.0.2
+      '@types/tmi.js':
+        specifier: 1.8.6
+        version: 1.8.6
       bcrypt:
         specifier: 5.1.1
         version: 5.1.1
@@ -586,6 +589,9 @@ packages:
 
   '@types/pg@8.11.6':
     resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
+
+  '@types/tmi.js@1.8.6':
+    resolution: {integrity: sha512-LVzNK7AxTMyh9qHLanAQR1o0I9XzfbIcXk85cx85igmCJHHO1Sm71sdhQ8Mj1WmRGzynPIoCXx6mVaFynWbsQw==}
 
   '@vitest/expect@1.6.0':
     resolution: {integrity: sha512-ixEvFVQjycy/oNgHjqsL6AZCDduC+tflRluaHIzKIsdbzkLn2U/iBnVeJwB6HsIjQBdfMR8Z0tRxKUsvFJEeWQ==}
@@ -1698,6 +1704,8 @@ snapshots:
       pg-protocol: 1.6.1
       pg-types: 4.0.2
     optional: true
+
+  '@types/tmi.js@1.8.6': {}
 
   '@vitest/expect@1.6.0':
     dependencies:

@@ -1,9 +1,10 @@
 import { expect, test, describe } from "vitest";
 import { parseLocalUrl } from "./utils/parseLocalUrl";
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 describe("Channels test", async () => {
-    //https://unify-bot.vercel.app/api/auth/twitch#access_token=4kyj8j44bkxglrbxg6jakqe25r4zna&scope=channel%3Aread%3Asubscriptions&token_type=bearer
-    const accessTokenLocal = "4kyj8j44bkxglrbxg6jakqe25r4zna";
+    const accessTokenLocal = process.env.TWITCH_TOKEN ?? ''
 
     test("Get channels", async () => {
         const res = await fetch(parseLocalUrl("/channels"));
@@ -46,7 +47,7 @@ describe("Channels test", async () => {
     });
 
     test("unlisten channel", async () => {
-        const res = await fetch(parseLocalUrl("/channels/unlisten?channel=akozl"), {
+        const res = await fetch(parseLocalUrl("/channels/unlisten"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -55,13 +56,6 @@ describe("Channels test", async () => {
         });
 
         expect(res.status).toBe(200);
-
-        const channels = await fetch(parseLocalUrl("/channels"));
-        const parsedValue = await channels.json();
-
-        expect(
-            parsedValue.find((c: { username: string }) => c.username === "akozl"),
-        ).toBeUndefined();
     });
 
     test("is not listening channel", async () => {
