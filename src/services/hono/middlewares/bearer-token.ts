@@ -1,14 +1,12 @@
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 
-export const bearerToken = () => zValidator(
-    'header',
+export const hasCookie = (cookie = 'twitch-auth') => zValidator(
+    'cookie',
     z.object({
-        authorization: z.string()
+        [cookie]: z.string()
     }),
-    ({ success, data }, c) => {
-        console.log(success, data)
-
-        if (!success) return c.json({ success: false, message: 'Invalid request' }, 400);
+    ({ success }, c) => {
+        if (!success) return c.json({ success: false, message: 'Invalid request', error: `${cookie} cookie not found` }, 400);
     }
 )

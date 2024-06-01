@@ -1,15 +1,19 @@
 -- Active: 1715715294984@@127.0.0.1@5432@unify
 
 # PostgreSQL
-CREATE OR REPLACE FUNCTION listen_channel(channel_name TEXT, access_token TEXT)
+CREATE OR REPLACE FUNCTION listen_channel(id NUMERIC, channel_name TEXT)
   RETURNS VOID AS
 $BODY$
 BEGIN
-  INSERT INTO channels (username, access_token)
-  VALUES (lower(channel_name), access_token)
+  INSERT INTO channels (id, username)
+  VALUES (id, lower(channel_name))
   ON CONFLICT (username)
   DO UPDATE
   SET listening = TRUE;
+
+  INSERT INTO bot_config (owner, prefix)
+  VALUES (id, 'UnifyOfficialBot');
+
 END;
 $BODY$
   LANGUAGE plpgsql VOLATILE;

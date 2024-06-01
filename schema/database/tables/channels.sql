@@ -9,7 +9,5 @@ CREATE TABLE channels (
   listening BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  access_token TEXT NOT NULL,
-  CONSTRAINT unique_username UNIQUE (username),
-  CONSTRAINT unique_access_token UNIQUE (access_token)
+  CONSTRAINT unique_username UNIQUE (username)
 );
