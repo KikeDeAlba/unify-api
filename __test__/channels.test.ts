@@ -62,7 +62,7 @@ describe("Channels test", async () => {
         expect(resJson.data).toBe(false)
     })
 
-    test('add command', async () => {
+    test('add basic command', async () => {
         const randomNumber = Math.floor(Math.random() * 1000)
 
         const res = await fetch(parseLocalUrl('/channels/command'), {
@@ -75,6 +75,34 @@ describe("Channels test", async () => {
                 command: `ping-${randomNumber}`,
                 description: 'ping pong',
                 code: `return 'pong! ${randomNumber}'`
+            })
+        });
+
+        expect(res.status).toBe(200)
+    })
+
+    test('add ai command', async () => {
+        const randomNumber = Math.floor(Math.random() * 1000)
+
+        const res = await fetch(parseLocalUrl('/channels/command'), {
+            headers: {
+                'Content-Type': 'application/json',
+                Cookie: `twitch-auth=${accessTokenLocal}`
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                command: `ai-${randomNumber}`,
+                description: 'hi!',
+                code: `return ai([
+                    {
+                        role: "system",
+                        content: "You are a twitch bot for the " + channel + " channel"
+                    },
+                    {
+                        role: "user",
+                        content: args.join(" ")
+                    }
+                ])`
             })
         });
 
