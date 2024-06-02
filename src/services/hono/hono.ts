@@ -8,7 +8,7 @@ interface HonoConfig {
     routes: Hono[];
 }
 
-export const initHono = async ({ port = 3000, routes }: HonoConfig) => {
+export const initHono = async ({ port = 1337, routes }: HonoConfig) => {
     const app = createApp();
     const honoRoutes = addRoutes(app, routes);
     serveApp(honoRoutes, Number.parseInt(process.env.PORT ?? `${port}`));
