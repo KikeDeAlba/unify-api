@@ -27,16 +27,27 @@ export class BotService {
 
                 const response = await onCommand(channel, command, args, tags);
 
+                if (!response || response === '') return;
+
                 this.client.say(channel, response);
             }
             catch (error) {
                 console.error(error);
             }
         });
+
+        this.client.connect()
     }
 
     addChannel(channel: string) {
-        this.client.join(channel);
+        this.client.join(channel)
+            .catch((error) => {
+                console.error(error)
+                console.log('Bot is not running')
+                process.exit(1)
+            })
+
+        console.log('Channel added')
     }
 
     removeChannel(channel: string) {
@@ -45,9 +56,5 @@ export class BotService {
 
     isListening(channel: string) {
         return this.client.getChannels().some((c) => c === channel);
-    }
-
-    connect() {
-        this.client.connect();
     }
 }

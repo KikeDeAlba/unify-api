@@ -1,8 +1,8 @@
 import { Hono } from "hono"
 import { logger } from 'hono/logger'
 
-export const createApp = () => {
-    const app = new Hono()
+export const createApp = (basePath = '/') => {
+    const app = new Hono().basePath(basePath)
     app.use(logger())
 
     app.get('/health', (c) => {

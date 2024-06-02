@@ -10,13 +10,20 @@ export const bot = new BotService({
 })
 
 export const initUnify = async () => {
-    const channels = await getActiveChannels()
+    try {
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        const channels = await getActiveChannels()
 
-    for (const channel of channels) {
-        bot.addChannel(channel)
+        console.log(channels)
+
+        for (const channel of channels) {
+            bot.addChannel(channel)
+        }
+
+
+    } catch (error) {
+        console.error(error)
+        process.exit(1)
     }
 
-    bot.connect()
-
-    console.log('Bot is running')
 }

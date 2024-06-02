@@ -1,1 +1,5 @@
-export const ROUTES = []
+import { channelsRouter } from "./controllers/channels";
+
+export const ROUTES = [
+    channelsRouter
+]
