@@ -1,6 +1,7 @@
 import { bot } from "@/core/init";
 import { hasCookie, jsonValidate } from "@/services/hono/middlewares";
 import { createApp } from "@/services/hono/utils/create-app";
+import { detectBadCommandCode } from "@/services/ollama/ollama.controller";
 import { addCommand, removeCommand } from "@/services/postgresql/channels";
 import { validateToken } from "@/services/twicth/utils";
 import { getCookie } from "hono/cookie";
@@ -64,6 +65,10 @@ channelsRouter.post('/command', hasCookie('twitch-auth'), jsonValidate(z.object(
         description: string;
         code: string;
     }>()
+
+    const isBadCode = await detectBadCommandCode(code)
+
+    if (isBadCode === 'bad') return c.text('Bad code', 400)
 
     const validateInfo = await validateToken(twitchAuth)
 

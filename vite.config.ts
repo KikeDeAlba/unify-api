@@ -5,5 +5,8 @@ export default defineConfig({
         alias: {
             '@/': `${process.cwd()}/src/`
         }
+    },
+    test: {
+        testTimeout: 999999
     }
 })
