@@ -66,9 +66,9 @@ channelsRouter.post('/command', hasCookie('twitch-auth'), jsonValidate(z.object(
         code: string;
     }>()
 
-    const isBadCode = await detectBadCommandCode(code)
+    // const isBadCode = await detectBadCommandCode(code)
 
-    if (isBadCode === 'bad') return c.text('Bad code', 400)
+    // if (isBadCode === 'bad') return c.text('Bad code', 400)
 
     const validateInfo = await validateToken(twitchAuth)
 
