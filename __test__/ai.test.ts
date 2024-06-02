@@ -45,5 +45,8 @@ describe("AI test", async () => {
 
 
         expect(res5).toBe('bad')
+
+        const res6 = await detectBadCommandCode('return tags.username')
+        expect(res6).toBe('good')
     })
 })
