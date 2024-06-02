@@ -9,9 +9,9 @@ interface HonoConfig {
 }
 
 export const initHono = async ({ port = 3000, routes }: HonoConfig) => {
-    const app = createApp()
-    const honoRoutes = addRoutes(app, routes)
-    serveApp(honoRoutes, port)
+    const app = createApp();
+    const honoRoutes = addRoutes(app, routes);
+    serveApp(honoRoutes, Number.parseInt(process.env.PORT ?? `${port}`));
 
-    console.log(`Server is running on port ${port}`)
+    console.log(`Server is running on port ${port}`);
 };
