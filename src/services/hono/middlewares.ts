@@ -11,6 +11,6 @@ export const hasCookie = <T extends string>(cookie: T) => zValidator(
     }
 )
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const jsonValidate = <T extends z.ZodType<any, z.ZodTypeDef, any>>(obj: T) => zValidator('json', obj, ({ success }, c) => {
-    if (!success) return c.json({ success: false, message: 'Invalid request', error: 'Invalid body' }, 400);
+export const jsonValidate = <T extends z.ZodType<any, z.ZodTypeDef, any>>(obj: T) => zValidator('json', obj, ({ success, data }, c) => {
+    if (!success) return c.json({ success: false, message: 'Invalid request', error: 'Invalid body', data }, 400);
 })
