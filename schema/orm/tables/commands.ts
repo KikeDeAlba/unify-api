@@ -8,7 +8,7 @@ export const CommandsTable = pgTable("commands", {
     command: text("command").notNull(),
     description: text("description").notNull(),
     function: text("function").notNull(),
-    owner: serial("owner").notNull().unique().references(() => ChannelsTable.id),
+    owner: serial("owner").notNull().references(() => ChannelsTable.id),
     createdAt: timestamp("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
     updatedAt: timestamp("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`)
 })

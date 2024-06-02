@@ -55,6 +55,6 @@ export class BotService {
     }
 
     isListening(channel: string) {
-        return this.client.getChannels().some((c) => c === channel);
+        return this.client.getChannels().some((c) => c.slice(1) === channel);
     }
 }

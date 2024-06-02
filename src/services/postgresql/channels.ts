@@ -3,6 +3,7 @@ import { db } from "schema/orm/db"
 import { BotConfigTable } from "schema/orm/tables/bot-config"
 import { ChannelsTable } from "schema/orm/tables/channels"
 import { CommandsTable } from "schema/orm/tables/commands"
+import { z } from "zod"
 
 export const getActiveChannels = async () => {
     const channels = await db.select({ username: ChannelsTable.username }).from(ChannelsTable).execute()
@@ -53,4 +54,22 @@ export const findCommand = async (channel: string, command: string) => {
     if (!objWithCommand) throw new Error('Command not found')
 
     return objWithCommand
+}
+
+export const addCommand = async (command: string, description: string, code: string, owner: string) => {
+    const [data] = await db.insert(CommandsTable).values({
+        command,
+        description,
+        function: code,
+        owner: z.coerce.number().parse(owner)
+    }).returning()
+
+    return data
+}
+
+export const removeCommand = async (command: string, owner: string) => {
+    await db.delete(CommandsTable).where(and(
+        eq(CommandsTable.command, command),
+        eq(CommandsTable.owner, z.coerce.number().parse(owner))
+    ))
 }
