@@ -43,7 +43,6 @@ export const detectBadCommandCode = async (code: string) => {
         lowerCaseCode.includes('localstorage') ||         // Acceso a almacenamiento local
         lowerCaseCode.includes('sessionstorage')          // Acceso a almacenamiento de sesión
     ) {
-        console.log('Detected bad code:', code);
         return 'bad';
     }
 
