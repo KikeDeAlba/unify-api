@@ -1,7 +1,7 @@
 {
 	"scripts": {
 		"start": "PORT=80 tsx src/index.ts",
-		"dev": "PORT=3000 tsx watch src/index.ts",
+		"dev": "PORT=1337 tsx watch src/index.ts",
 		"test": "vitest"
 	},
 	"dependencies": {
