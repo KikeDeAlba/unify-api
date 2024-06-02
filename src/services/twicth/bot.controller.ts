@@ -35,8 +35,6 @@ export class BotService {
             try {
                 const prefix = await getPrefix(channel);
 
-                console.log(prefix)
-
                 if (!messageWithoutAt.startsWith(prefix)) return;
 
                 const command = messageWithoutAt.slice(prefix.length).split(" ")[1];

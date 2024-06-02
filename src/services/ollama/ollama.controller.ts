@@ -20,6 +20,33 @@ export const createChatCompletion = async (messages: OpenAI.Chat.Completions.Cha
 }
 
 export const detectBadCommandCode = async (code: string) => {
+    const lowerCaseCode = code.toLowerCase();
+
+    if (
+        lowerCaseCode.includes('globalthis') ||           // Manipulación de globalThis
+        lowerCaseCode.includes('require(') ||             // Carga de módulos
+        lowerCaseCode.includes('while(') ||               // Bucles potencialmente infinitos
+        lowerCaseCode.includes('for(') ||                 // Bucles potencialmente infinitos
+        lowerCaseCode.includes('process') ||        // Salida del proceso
+        lowerCaseCode.includes('readfilesync') ||         // Acceso síncrono a archivos
+        lowerCaseCode.includes('child_process') ||        // Ejecución de comandos del sistema
+        lowerCaseCode.includes('eval(') ||                // Evaluación de código arbitrario
+        lowerCaseCode.includes('exec(') ||                // Ejecución de comandos del sistema
+        lowerCaseCode.includes('spawn(') ||               // Ejecución de procesos del sistema
+        lowerCaseCode.includes('fork(') ||                // Creación de procesos hijos
+        lowerCaseCode.includes('settimeout(') ||          // Retraso de ejecución
+        lowerCaseCode.includes('setinterval(') ||         // Ejecución repetida
+        lowerCaseCode.includes('delete ') ||              // Eliminación de propiedades de objetos
+        lowerCaseCode.includes('websocket') ||            // Comunicaciones en tiempo real
+        lowerCaseCode.includes('window') ||      // Redirección de página
+        lowerCaseCode.includes('document') ||      // Acceso a cookies
+        lowerCaseCode.includes('localstorage') ||         // Acceso a almacenamiento local
+        lowerCaseCode.includes('sessionstorage')          // Acceso a almacenamiento de sesión
+    ) {
+        console.log('Detected bad code:', code);
+        return 'bad';
+    }
+
     const res = await ollama.chat.completions.create({
         model: MODELS.llama3,
         messages: [
@@ -62,6 +89,7 @@ export const detectBadCommandCode = async (code: string) => {
                 - Simple string operations.
                 - Logging and returning values without side effects.
                 - Operations that do not alter the state of the system or access sensitive information.
+                - Ai operations
     
                 Examples:
                 - \`return channel\` - Returns a variable safely.
@@ -133,14 +161,6 @@ export const detectBadCommandCode = async (code: string) => {
             },
             {
                 role: 'user',
-                content: 'console.log("Hello, world!")'
-            },
-            {
-                role: 'assistant',
-                content: 'good'
-            },
-            {
-                role: 'user',
                 content: 'return channel'
             },
             {
@@ -166,6 +186,31 @@ export const detectBadCommandCode = async (code: string) => {
             {
                 role: 'user',
                 content: 'return channel.toUpperCase()'
+            },
+            {
+                role: 'assistant',
+                content: 'good'
+            },
+            {
+                role: 'user',
+                content: `return ai([
+                    {
+                        role: "system",
+                        content: "You are a twitch bot for the " + channel + " channel"
+                    },
+                    {
+                        role: "user",
+                        content: args.join(" ")
+                    } 
+                ])`
+            },
+            {
+                role: 'assistant',
+                content: 'good'
+            },
+            {
+                role: 'user',
+                content: 'return tags.username'
             },
             {
                 role: 'assistant',
