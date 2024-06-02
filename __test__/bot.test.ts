@@ -6,7 +6,7 @@ describe("Bot test", async () => {
     test('get prefix', async () => {
         const prefix = await getPrefix('akozl')
 
-        expect(prefix).toBe('UnifyOfficialBot')
+        expect(prefix).toBe('UnifyOfficialBot ')
     })
 
     test('execute command function', async () => {

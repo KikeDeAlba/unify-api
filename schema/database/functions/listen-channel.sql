@@ -12,7 +12,7 @@ BEGIN
   SET listening = TRUE;
 
   INSERT INTO bot_config (owner, prefix)
-  VALUES (id, 'UnifyOfficialBot')
+  VALUES (id, 'UnifyOfficialBot ')
   ON CONFLICT (owner)
   DO NOTHING;
 

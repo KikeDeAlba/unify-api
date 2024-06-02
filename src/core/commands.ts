@@ -5,7 +5,11 @@ import { z } from "zod";
 
 export const onCommand: OnCommandF = async (channel, command, args, tags) => {
     try {
+        console.log(channel, command, args, tags)
+
         const commandFromDb = await findCommand(channel, command);
+
+        console.log(commandFromDb)
 
         return executeCommand(channel, args, tags, commandFromDb.function);
     } catch (error) {

@@ -6,12 +6,11 @@
 	"dependencies": {
 		"@hono/node-server": "^1.11.1",
 		"@hono/zod-validator": "0.2.1",
-		"@types/bcrypt": "5.0.2",
 		"@types/tmi.js": "1.8.6",
-		"bcrypt": "5.1.1",
 		"dotenv": "16.4.5",
 		"drizzle-orm": "^0.30.10",
 		"hono": "^4.4.0",
+		"openai": "4.47.3",
 		"postgres": "3.4.4",
 		"tmi.js": "1.8.5",
 		"zod": "3.23.8"

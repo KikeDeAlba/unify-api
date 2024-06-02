@@ -1,11 +1,16 @@
 import { Client } from "tmi.js";
 import * as dotenv from "dotenv";
-import type { PBotService } from "./bot.types";
+import type { GetPrefixF, OnCommandF, PBotService } from "./bot.types";
 dotenv.config();
 
 export class BotService {
     client;
+    getPrefix: GetPrefixF;
+    onCommand: OnCommandF;
     constructor({ channels, getPrefix, onCommand }: PBotService) {
+        this.getPrefix = getPrefix
+        this.onCommand = onCommand
+
         this.client = Client({
             identity: {
                 username: process.env.TWITCH_USERNAME_BOT,
@@ -14,18 +19,33 @@ export class BotService {
             channels,
         });
 
+        this.listenMessages(getPrefix, onCommand)
+
+        this.client.connect()
+    }
+
+    async listenMessages(getPrefix: GetPrefixF, onCommand: OnCommandF) {
         this.client.on("message", async (channel, tags, message, self) => {
             if (self) return;
+
+            let messageWithoutAt = message
+            if (message.startsWith('@')) messageWithoutAt = message.slice(1)
+            console.log(messageWithoutAt)
 
             try {
                 const prefix = await getPrefix(channel);
 
-                if (!message.startsWith(prefix)) return;
+                console.log(prefix)
 
-                const command = message.slice(prefix.length).split(" ")[0];
-                const args = message.slice(prefix.length).split(" ").slice(1);
+                if (!messageWithoutAt.startsWith(prefix)) return;
 
-                const response = await onCommand(channel, command, args, tags);
+                const command = messageWithoutAt.slice(prefix.length).split(" ")[1];
+                console.log(command)
+
+                const args = messageWithoutAt.slice(prefix.length).split(" ").slice(2);
+                console.log(args)
+
+                const response = await onCommand(channel.slice(1), command, args, tags);
 
                 if (!response || response === '') return;
 
@@ -35,8 +55,6 @@ export class BotService {
                 console.error(error);
             }
         });
-
-        this.client.connect()
     }
 
     addChannel(channel: string) {
