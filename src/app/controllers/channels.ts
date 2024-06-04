@@ -2,7 +2,7 @@ import { bot } from "@/core/init";
 import { hasCookie, jsonValidate } from "@/services/hono/middlewares";
 import { createApp } from "@/services/hono/utils/create-app";
 import { detectBadCommandCode } from "@/services/ollama/ollama.controller";
-import { addCommand, removeCommand } from "@/services/postgresql/channels";
+import { addCommand, getCommands, removeCommand } from "@/services/postgresql/channels";
 import { validateToken } from "@/services/twicth/utils";
 import { getCookie } from "hono/cookie";
 import { sql } from "schema/orm/db";
@@ -97,4 +97,14 @@ channelsRouter.delete('/command/:command', hasCookie('twitch-auth'), async (c) =
         console.error(error)
         return c.text('Error', 500)
     }
+})
+
+channelsRouter.get('/commands', hasCookie('twitch-auth'), async (c) => {
+    const twitchAuth = getCookie(c, 'twitch-auth') as string
+
+    const validateInfo = await validateToken(twitchAuth)
+
+    const commands = await getCommands(validateInfo.user_id)
+
+    return c.json({ success: true, data: commands })
 })

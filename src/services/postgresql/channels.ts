@@ -73,3 +73,16 @@ export const removeCommand = async (command: string, owner: string) => {
         eq(CommandsTable.owner, z.coerce.number().parse(owner))
     ))
 }
+
+export const getCommands = async (owner: string) => {
+    const objWithCommands = await db.select({
+        command: CommandsTable.command,
+        description: CommandsTable.description,
+        code: CommandsTable.function
+    })
+        .from(CommandsTable)
+        .where(eq(CommandsTable.owner, z.coerce.number().parse(owner)))
+        .execute()
+
+    return objWithCommands
+}
